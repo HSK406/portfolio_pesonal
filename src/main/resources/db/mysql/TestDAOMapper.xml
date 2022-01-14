@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="chy.net.app.dao.TestDAO">
+	
+	<!-- 여러건 조회 -->
+	<select id="selectTestList" parameterType="TestVO" resultType="TestVO">
+		SELECT
+			*
+		FROM
+			TBL_TEST
+		WHERE
+			1=1
+		<if test="srchText != null and !srchText.equals('')">
+			AND
+				TEXT LIKE CONCAT('%',#{srchText},'%')
+		</if>
+	</select>
+	
+	<!-- 한건 조회 -->
+	<select id="selectTest" parameterType="String" resultType="TestVO">
+		SELECT
+			*
+		FROM
+			TBL_TEST
+		WHERE
+			NO = #{value}
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="insertTest" parameterType="TestDTO">
+		INSERT INTO
+			TBL_TEST
+		VALUES
+			(
+			#{text}
+			)
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="updateTest" parameterType="TestDTO">
+		UPDATE
+			TBL_TEST
+		SET
+			TEXT = #{text}
+		WHERE
+			NO = #{no}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteTest" parameterType="String">
+		DELETE 
+		FROM
+			TBL_TEST
+		WHERE
+			NO = #{value}
+	</delete>
+
+</mapper>
